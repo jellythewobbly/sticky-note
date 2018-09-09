@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 class Note {
-	constructor(title = 'Title', content = 'Take a note...', color = 'white') {
+	constructor(title = '', content = '', color = 'white') {
 		this.title = title;
 		this.content = content;
 		this.color = color;
@@ -42,7 +42,7 @@ const createNote = (t, cont, col) => {
 
 	// title of note
 	let title = create('input');
-	t ? (title.defaultValue = t) : (title.placeholder = test.title);
+	t ? (title.defaultValue = t) : (title.placeholder = 'Title');
 	title.className = 'title';
 	title.addEventListener('focusout', function() {
 		test.title = title.value;
@@ -55,7 +55,9 @@ const createNote = (t, cont, col) => {
 
 	// text area for note body
 	let content = create('textarea');
-	cont ? (content.textContent = cont) : (content.placeholder = test.content);
+	cont
+		? (content.textContent = cont)
+		: (content.placeholder = 'Take a note...');
 	content.className = 'content';
 	content.rows = '8';
 	content.addEventListener('focusout', function() {
@@ -76,7 +78,9 @@ const createNote = (t, cont, col) => {
 		option.textContent = color.replace('_', ' ');
 		select.appendChild(option);
 	}
-	select.selectedIndex = 0;
+	const index = Array.from(select).findIndex(i => i.value == col);
+	select.selectedIndex = col ? index : 0;
+	console.log(select.selectedIndex);
 	select.addEventListener('change', function() {
 		this.parentElement.style.backgroundColor = colors[this.value];
 		test.color = this.value;
@@ -141,7 +145,6 @@ deleteAll = () => {
 };
 
 search = () => {
-	console.log(elementId('search').value);
 	// searching in both title and content by using array.filter
 	const searchResults = Array.from(elementsClass('note')).filter(
 		i =>
@@ -153,16 +156,13 @@ search = () => {
 				.includes(elementId('search').value.toLowerCase())
 	);
 	// reset
-	holder = [];
 	while (elementId('main').firstChild) {
 		elementId('main').removeChild(elementId('main').firstChild);
 	}
 	// change title to 'SEARCH RESULTS'
 	elementId('heading').textContent = 'SEARCH RESULTS';
 	// append results
-	searchResults.forEach(i =>
-		createNote(i.children[0].value, i.children[1].value, i.children[2].value)
-	);
+	searchResults.forEach(i => appendMain(i.cloneNode(true)));
 	// reset search form
 	elementId('search').value = '';
 	elementId('back').style.visibility = 'visible';
