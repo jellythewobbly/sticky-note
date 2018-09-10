@@ -8,6 +8,8 @@
 
 3. Your browser should open up. Enjoy!
 
+4. For IE10/Safari, you will need to run a http-server/localhost
+
 This page contains description and requirements for a Front-End assignment on Vanilla **Javascript**, **HTML5**, **CSS3**.
 
 ### Duration
