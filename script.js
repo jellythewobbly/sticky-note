@@ -80,7 +80,6 @@ const createNote = (t, cont, col) => {
 	}
 	const index = Array.from(select).findIndex(i => i.value == col);
 	select.selectedIndex = col ? index : 0;
-	console.log(select.selectedIndex);
 	select.addEventListener('change', function() {
 		this.parentElement.style.backgroundColor = colors[this.value];
 		test.color = this.value;
@@ -133,7 +132,7 @@ const createNote = (t, cont, col) => {
 	holder.push(test);
 };
 
-deleteAll = () => {
+const deleteAll = () => {
 	if (window.confirm('ARE YOU SURE?')) {
 		// reset actions
 		holder = [];
@@ -144,7 +143,7 @@ deleteAll = () => {
 	}
 };
 
-search = () => {
+const search = () => {
 	// searching in both title and content by using array.filter
 	const searchResults = Array.from(elementsClass('note')).filter(
 		i =>
@@ -168,7 +167,7 @@ search = () => {
 	elementId('back').style.visibility = 'visible';
 };
 
-back = () => {
+const back = () => {
 	// hide back button
 	elementId('back').style.visibility = 'hidden';
 	holder = [];
